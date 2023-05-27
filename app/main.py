@@ -12,7 +12,7 @@ from routers import user, health, category, transaction, finance_type
 # from routers import health
 
 description = """
-A Python REST API 🚀
+A Personal finance tracking REST API 🚀
 
 ## Usage
 

@@ -91,7 +91,7 @@ class UpdateTransaction(BaseTransaction):
 
 class ShowTransaction(BaseTransaction):
     id: int
-    user: ShowUser
+    user_id: int
     category: ShowCategory
     finance_type: FinType
     created_at: datetime
