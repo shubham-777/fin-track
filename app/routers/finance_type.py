@@ -3,9 +3,9 @@ from typing import List
 from fastapi import APIRouter, status, Depends
 from sqlalchemy.orm import Session
 
-from app.crud.fin_type import get_all_types
-from app.db.pyd_schemas import FinType, ShowFinType
-from app.db.sql import get_session
+from crud.fin_type import get_all_types
+from db.pyd_schemas import FinType
+from db.sql import get_session
 
 router = APIRouter(prefix="/fin_type", tags=["fin_type"], responses={404: {"description": "Not found"}})
 tags_metadata = [

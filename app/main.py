@@ -1,12 +1,10 @@
 import uvicorn
 from fastapi import FastAPI
-from fastapi.staticfiles import StaticFiles
-from fastapi.templating import Jinja2Templates
 
-from app.core import configurations as config
-from app.db.sql import engine
-from app.db.sql_models import Base
-from app.routers import user, health, category, finance_type
+from core import configurations as config
+from db.sql import engine
+from db.sql_models import Base
+from routers import user, health, category, transaction, finance_type
 
 # from fastapi.exception_handlers import http_exception_handler
 # from routers import continent, country, city, task_res
@@ -54,20 +52,12 @@ app = FastAPI(title=config.TITLE,
                   "url": config.WEB_URL,
                   "email": config.EMAIL,
               }, openapi_tags=all_tags_metadata)
-app.mount("/static", StaticFiles(directory="app/static"), name="static")
-templates = Jinja2Templates(directory='templates', autoescape=False, auto_reload=True)
 Base.metadata.create_all(bind=engine)
 app.include_router(health.router)
 app.include_router(user.router)
 app.include_router(category.router)
+app.include_router(transaction.router)
 app.include_router(finance_type.router)
-# app.include_router(home.router)
-
-# app.include_router(health.health_route)
-# app.include_router(task_res.router)
-# app.include_router(continent.router)
-# app.include_router(country.router)
-# app.include_router(city.router)
 
 # class CustomException(Exception):
 #     def __init__(self, desc: str) -> None:

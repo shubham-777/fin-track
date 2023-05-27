@@ -2,12 +2,11 @@ from typing import List
 
 from fastapi import APIRouter, status, Depends
 from sqlalchemy.orm import Session
-from fastapi.responses import JSONResponse
 
-from app.crud.category import add_category, update_category_by_id, get_all as crud_get_all, delete_category_by_id, \
+from crud.category import add_category, update_category_by_id, get_all as crud_get_all, delete_category_by_id, \
     get_category_by_id
-from app.db.pyd_schemas import AddUser, ShowUser, ShowCategory, ShowCategory, AddCategory, UpdateCategory
-from app.db.sql import get_session
+from db.pyd_schemas import ShowCategory, BaseCategory, UpdateCategory
+from db.sql import get_session
 
 router = APIRouter(prefix="/category", tags=["category"], responses={404: {"description": "Not found"}})
 tags_metadata = [
@@ -19,7 +18,7 @@ tags_metadata = [
 
 
 @router.post("/add", status_code=status.HTTP_201_CREATED, response_model=ShowCategory)
-def add_new_category(category: AddCategory, db: Session = Depends(get_session)):
+def add_new_category(category: BaseCategory, db: Session = Depends(get_session)):
     return add_category(category, db)
 
 

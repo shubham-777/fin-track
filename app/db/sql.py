@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
-from app.core.configurations import DBNAME, HOSTNAME, PORT, UNAME, PASS
+from core.configurations import DBNAME, HOSTNAME, PORT, UNAME, PASS
 
 SQLALCHEMY_DATABASE_URL = f"postgresql+psycopg2://{UNAME}:{PASS}@{HOSTNAME}:{PORT}/{DBNAME}"
 

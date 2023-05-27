@@ -1,7 +1,7 @@
-from sqlalchemy import Column, Integer, String, DateTime, func, TIMESTAMP, Boolean, column, ForeignKey
+from sqlalchemy import Column, Integer, String, func, TIMESTAMP, Boolean, ForeignKey, BigInteger, Date
 from sqlalchemy.orm import relationship
 
-from app.db.sql import Base
+from db.sql import Base
 
 
 class User(Base):
@@ -28,8 +28,24 @@ class Category(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String(50), nullable=False)
     description = Column(String(), nullable=True)
-    finance_type_id = Column(Integer, ForeignKey("finance_type.id"))
     created_at = Column(TIMESTAMP, server_default=func.now())
     updated_at = Column(TIMESTAMP, server_default=func.now(), onupdate=func.now())
 
-    finance_type = relationship("FinType", backref="category")
+
+class Transaction(Base):
+    __tablename__ = "transaction"
+
+    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, ForeignKey('user.id'))
+    category_id = Column(Integer, ForeignKey('category.id'))
+    finance_type_id = Column(Integer, ForeignKey("finance_type.id"))
+    amount = Column(BigInteger, nullable=False)
+    title = Column(String(50), nullable=False)
+    note = Column(String(255))
+    date = Column(Date, nullable=False)
+    created_at = Column(TIMESTAMP, server_default=func.now())
+    updated_at = Column(TIMESTAMP, server_default=func.now(), onupdate=func.now())
+
+    user = relationship('User', backref='transaction')
+    category = relationship('Category', backref='transaction')
+    finance_type = relationship("FinType", backref="transaction")

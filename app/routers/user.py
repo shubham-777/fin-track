@@ -1,9 +1,9 @@
 from fastapi import APIRouter, status, Depends
 from sqlalchemy.orm import Session
 
-from app.crud.user import add_user, get_user as get_user_crud, user_login
-from app.db.pyd_schemas import AddUser, ShowUser
-from app.db.sql import get_session
+from crud.user import add_user, get_user as get_user_crud, user_login
+from db.pyd_schemas import AddUser, ShowUser
+from db.sql import get_session
 
 router = APIRouter(prefix="/user", tags=["user"], responses={404: {"description": "Not found"}})
 tags_metadata = [

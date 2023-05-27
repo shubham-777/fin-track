@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, date
 from typing import Union
 
 from pydantic import BaseModel, validator
@@ -42,29 +42,58 @@ class UserProfile(BaseUser):
         orm_mode = True
 
 
-class ShowFinType(BaseModel):
+class BaseFinType(BaseModel):
     name: str
 
     class Config:
         orm_mode = True
 
 
-class FinType(ShowFinType):
+class FinType(BaseFinType):
     id: int
 
 
-class AddCategory(BaseModel):
+class BaseCategory(BaseModel):
     name: str
     description: str
+
+
+class UpdateCategory(BaseCategory):
+    id: int
+
+
+class ShowCategory(BaseCategory):
+    id: int
+    created_at: datetime
+    updated_at: datetime
+
+    @validator('created_at', 'updated_at')
+    def convert_date_time(cls, param: datetime):
+        return param.strftime('%Y-%m-%d, %H:%M:%S')
+
+    class Config:
+        orm_mode = True
+
+
+class BaseTransaction(BaseModel):
+    user_id: int
+    category_id: int
+    finance_type_id: int
+    amount: int
+    date: date
+    title: str
+    note: Union[str, None] = None
+
+
+class UpdateTransaction(BaseTransaction):
+    id: int
+
+
+class ShowTransaction(BaseTransaction):
+    id: int
+    user: ShowUser
+    category: ShowCategory
     finance_type: FinType
-
-
-class UpdateCategory(AddCategory):
-    id: int
-
-
-class ShowCategory(AddCategory):
-    id: int
     created_at: datetime
     updated_at: datetime
 

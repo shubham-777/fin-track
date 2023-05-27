@@ -4,9 +4,9 @@ from typing import Union
 from sqlalchemy.orm import Session
 from fastapi import status, HTTPException, Depends
 from fastapi.responses import JSONResponse
-from app.db.pyd_schemas import AddUser, TokenData, ShowUser
-from app.db.sql import get_session
-from app.db.sql_models import User
+from db.pyd_schemas import AddUser, TokenData, ShowUser
+from db.sql import get_session
+from db.sql_models import User
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from jose import JWTError, jwt
 from passlib.context import CryptContext
